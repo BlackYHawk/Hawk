@@ -41,10 +41,8 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
     private GridView noScrollgridview;
     private ChoseGridAdapter choseGridAdapter;
     private HashMap<String, ImageBucket> buckets;
+    private List<ImageItem> wholeItems;
     private List<ImageItem> items;
-    private String[] PROJECTIONS = new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.BUCKET_ID,
-            MediaStore.Images.Media.PICASA_ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.TITLE, MediaStore.Images.Media.SIZE, MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
 
     private RelativeLayout album_relativeLayout;
     private AlbumPopupWindow albumPopupWindow;
@@ -63,6 +61,7 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
     private void init() {
         buckets = new HashMap<String, ImageBucket>();
         items = new ArrayList<ImageItem>();
+        wholeItems = new ArrayList<ImageItem>();
     }
 
     private void initView() {
@@ -135,29 +134,48 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
         }
     }
 
+    //从相册中获取所有图片
+    private void forEachBuckets() {
+        Iterator<Map.Entry<String, ImageBucket>> itr = buckets.entrySet()
+                .iterator();
+        while (itr.hasNext()) {
+            Map.Entry<String, ImageBucket> entry = (Map.Entry<String, ImageBucket>) itr
+                    .next();
+            ImageBucket bucket = entry.getValue();
+
+            for (int i = 0; i < bucket.imageList.size(); i++) {
+                ImageItem image = bucket.imageList.get(i);
+                items.add(image);
+                wholeItems.add(image);
+            }
+        }
+    }
+
     private void getTotalImageItem(String bucketId) {
         items.clear();
 
         if(bucketId == null || bucketId.equals("")) {
-            Iterator<Map.Entry<String, ImageBucket>> itr = buckets.entrySet()
-                    .iterator();
-            while (itr.hasNext()) {
-                Map.Entry<String, ImageBucket> entry = (Map.Entry<String, ImageBucket>) itr
-                        .next();
-                ImageBucket bucket = entry.getValue();
+            forEachBuckets();
 
-                for (int i = 0; i < bucket.imageList.size(); i++) {
-                    ImageItem image = bucket.imageList.get(i);
-                    items.add(image);
-                }
+            ImageBucket bucket = buckets.get("-1");
+            if (bucket == null) {
+                bucket = new ImageBucket();
+                bucket.imageList = items;
+                bucket.bucketName = "所有";
+                bucket.count = items.size();
+                buckets.put("-1", bucket);
             }
         }
         else {
             ImageBucket bucket = buckets.get(bucketId);
 
-            for (int i = 0; i < bucket.imageList.size(); i++) {
-                ImageItem image = bucket.imageList.get(i);
-                items.add(image);
+            if(bucketId.equals("-1")) {
+                items.addAll(wholeItems);
+            } else {
+                for (int i = 0; i < bucket.imageList.size(); i++) {
+                    ImageItem image = bucket.imageList.get(i);
+                    items.add(image);
+                }
             }
         }
     }
@@ -296,6 +314,10 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        wholeItems.clear();
+        wholeItems = null;
+        items.clear();
+        items = null;
 
     }
 }
