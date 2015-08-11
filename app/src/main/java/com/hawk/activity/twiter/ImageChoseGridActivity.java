@@ -113,6 +113,7 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
             album.setText(bucket.bucketName);
             getTotalImageItem(bucketId);
             choseGridAdapter.notifyDataSetChanged();
+            noScrollgridview.smoothScrollToPosition(0);
         }
         albumPopupWindow.dismiss();
     }

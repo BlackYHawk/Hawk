@@ -112,20 +112,28 @@ public class BitmapCache {
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeStream(in, null, options);
 		in.close();
-		int i = 0;
+
 		Bitmap bitmap = null;
-		while (true) {
-			if ((options.outWidth >> i <= 1000)
-					&& (options.outHeight >> i <= 1000)) {
-				in = new BufferedInputStream(
-						new FileInputStream(new File(path)));
-				options.inSampleSize = (int) Math.pow(2.0D, i);
-				options.inJustDecodeBounds = false;
-				bitmap = BitmapFactory.decodeStream(in, null, options);
-				break;
-			}
-			i += 1;
-		}
+
+        options.inSampleSize = 5;
+        float imagew = 150;
+        float imageh = 150;
+        int yRatio = (int) Math.ceil(options.outHeight
+                / imageh);
+        int xRatio = (int) Math
+                .ceil(options.outWidth / imagew);
+
+        if (yRatio > 1 || xRatio > 1) {
+            if (yRatio > xRatio) {
+                options.inSampleSize = yRatio;
+            } else {
+                options.inSampleSize = xRatio;
+            }
+
+        }
+        options.inJustDecodeBounds = false;
+        bitmap = BitmapFactory.decodeStream(in, null, options);
+
 		return bitmap;
 	}
 
