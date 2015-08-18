@@ -2,6 +2,7 @@ package com.hawk.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class ChoseGridAdapter extends BaseAdapter {
     private List<ImageItem> items;
 
     private ImageCheckListener imageCheckListener;
+    private ImageCaptureListener imageCaptureListener;
     private BitmapCache cache;
 
 
@@ -34,8 +36,16 @@ public class ChoseGridAdapter extends BaseAdapter {
         public void check(boolean chose, ImageItem imageItem);
     }
 
+    public interface ImageCaptureListener {
+        public void capture();
+    }
+
     public void setImageCheckListener(ImageCheckListener imageCheckListener) {
         this.imageCheckListener = imageCheckListener;
+    }
+
+    public void setImageCaptureListener(ImageCaptureListener imageCaptureListener) {
+        this.imageCaptureListener = imageCaptureListener;
     }
 
     BitmapCache.ImageCallback callback = new BitmapCache.ImageCallback() {
@@ -65,7 +75,7 @@ public class ChoseGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return items.size();
+        return items.size() + 1;
     }
 
     @Override
@@ -95,46 +105,62 @@ public class ChoseGridAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final ImageItem item = items.get(position);
-
-        holder.image.setTag(item.imagePath);
-        cache.displayBmp(holder.image, item.thumbnailPath, item.imagePath, callback);
-
-        if (item.isSelected) {
-            holder.selected.setVisibility(View.VISIBLE);
-            holder.selected.setImageResource(R.drawable.bg_transparent);
+        if(position == 0) {
+            holder.image.setImageBitmap(BitmapFactory.decodeResource(
+                    context.getResources(), R.drawable.ic_camera_black));
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageCaptureListener.capture();
+                }
+            });
+            holder.selected.setVisibility(View.INVISIBLE);
+            holder.checkBox.setVisibility(View.INVISIBLE);
         } else {
-            holder.selected.setVisibility(View.GONE);
+
+            final ImageItem item = items.get(position - 1);
+
+            holder.image.setTag(item.imagePath);
+            cache.displayBmp(holder.image, item.thumbnailPath, item.imagePath, callback);
+
+            if (item.isSelected) {
+                holder.selected.setVisibility(View.VISIBLE);
+                holder.selected.setImageResource(R.drawable.bg_transparent);
+            } else {
+                holder.selected.setVisibility(View.GONE);
+            }
+
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setOncheckListener(null);
+            holder.checkBox.setChecked(item.isSelected);
+
+            final ViewHolder holder1 = holder;
+            holder.checkBox.setOncheckListener(new CheckBox.OnCheckListener() {
+                @Override
+                public void onCheck(CheckBox checkBox, boolean b) {
+                    if (b) {
+                        item.isSelected = true;
+                        holder1.selected.setVisibility(View.VISIBLE);
+                        holder1.selected.setImageResource(R.drawable.bg_transparent);
+
+                        imageCheckListener.check(true, item);
+                    } else {
+                        item.isSelected = false;
+                        holder1.selected.setVisibility(View.GONE);
+
+                        imageCheckListener.check(false, item);
+                    }
+                }
+            });
+
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
-        holder.checkBox.setOncheckListener(null);
-        holder.checkBox.setChecked(item.isSelected);
-
-        final ViewHolder holder1 = holder;
-        holder.checkBox.setOncheckListener(new CheckBox.OnCheckListener() {
-            @Override
-            public void onCheck(CheckBox checkBox, boolean b) {
-                if (b) {
-                    item.isSelected = true;
-                    holder1.selected.setVisibility(View.VISIBLE);
-                    holder1.selected.setImageResource(R.drawable.bg_transparent);
-
-                    imageCheckListener.check(true, item);
-                } else {
-                    item.isSelected = false;
-                    holder1.selected.setVisibility(View.GONE);
-
-                    imageCheckListener.check(false, item);
-                }
-            }
-        });
-
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return convertView;
     }

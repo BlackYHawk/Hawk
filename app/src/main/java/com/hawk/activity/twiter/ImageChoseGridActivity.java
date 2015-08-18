@@ -2,7 +2,9 @@ package com.hawk.activity.twiter;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,7 +24,11 @@ import com.hawk.adapter.ChoseGridAdapter;
 import com.hawk.data.cache.Bimp;
 import com.hawk.data.model.ImageBucket;
 import com.hawk.data.model.ImageItem;
+import com.hawk.middleware.util.FileUtil;
+import com.hawk.util.Constants;
+import com.hawk.util.UIHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +37,8 @@ import java.util.Map;
 
 
 public class ImageChoseGridActivity extends AppCompatActivity implements View.OnClickListener,
-        AlbumPopupWindow.AlbumClickListener, ChoseGridAdapter.ImageCheckListener {
+        AlbumPopupWindow.AlbumClickListener, ChoseGridAdapter.ImageCheckListener,
+        ChoseGridAdapter.ImageCaptureListener {
 
     private static String TAG = "ImageChoseGridActivity";
     private Toolbar toolbar;
@@ -94,6 +101,7 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
         choseGridAdapter = new ChoseGridAdapter(this, items);
         choseGridAdapter.setImageCheckListener(this);
+        choseGridAdapter.setImageCaptureListener(this);
         noScrollgridview.setAdapter(choseGridAdapter);
     }
 
@@ -154,6 +162,45 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
                 break;
         }
     }
+
+    @Override
+    public void capture() {
+        photo();
+    }
+
+    private static final int TAKE_PICTURE = 0x000000;
+    private String path = "";
+
+    public void photo() {
+        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = FileUtil.createFile(Constants.IMAGE, String.valueOf(System.currentTimeMillis())
+                + Constants.IMAGE_FORMAT);
+        if(file != null) {
+            path = file.getPath();
+            Uri imageUri = Uri.fromFile(file);
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        } else {
+            UIHelper.showToast(this, "不支持SD卡");
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK ) {
+            switch (requestCode) {
+                case TAKE_PICTURE: {
+                    if (Bimp.drr.size() < 9) {
+                        Bimp.drr.add(path);
+                    } else {
+                        UIHelper.showToast(this, "不能超过9张");
+                    }
+                    finish();
+                    break;
+                }
+            }
+        }
+    }
+
 
     //从相册中获取所有图片
     private void forEachBuckets() {

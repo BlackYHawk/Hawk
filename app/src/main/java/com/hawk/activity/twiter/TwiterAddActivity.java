@@ -1,31 +1,21 @@
 package com.hawk.activity.twiter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +30,7 @@ import com.hawk.middleware.util.StringUtil;
 import com.hawk.util.Constants;
 import com.hawk.util.ImageUtil;
 import com.hawk.util.LOG;
-import com.hawk.util.UIHelper;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,7 +79,9 @@ public class TwiterAddActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
                 if (arg2 == Bimp.bmp.size()) {
-                    new PopupWindows(TwiterAddActivity.this, noScrollgridview);
+                    Intent intent = new Intent(TwiterAddActivity.this,
+                            ImageChoseGridActivity.class);
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(TwiterAddActivity.this,
                             PhotoInfoActivity.class);
@@ -148,95 +138,6 @@ public class TwiterAddActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             adapter.update();
-        }
-    }
-
-    public class PopupWindows extends PopupWindow {
-
-        public PopupWindows(Context mContext, View parent) {
-
-            View view = View
-                    .inflate(mContext, R.layout.item_popupwindows, null);
-            view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    R.anim.fade_ins));
-            LinearLayout ll_popup = (LinearLayout) view
-                    .findViewById(R.id.ll_popup);
-            ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    R.anim.push_bottom_in_2));
-
-            setWidth(ViewGroup.LayoutParams.FILL_PARENT);
-            setHeight(ViewGroup.LayoutParams.FILL_PARENT);
-            setBackgroundDrawable(new BitmapDrawable());
-            setFocusable(true);
-            setOutsideTouchable(true);
-            setContentView(view);
-            showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-
-            Button bt1 = (Button) view
-                    .findViewById(R.id.item_popupwindows_camera);
-            Button bt2 = (Button) view
-                    .findViewById(R.id.item_popupwindows_Photo);
-            Button bt3 = (Button) view
-                    .findViewById(R.id.item_popupwindows_cancel);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismiss();
-                }
-            });
-            bt1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    photo();
-                    dismiss();
-                }
-            });
-            bt2.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(TwiterAddActivity.this,
-                            ImageChoseGridActivity.class);
-                    startActivity(intent);
-                    dismiss();
-                }
-            });
-            bt3.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    dismiss();
-                }
-            });
-
-        }
-    }
-
-    private static final int TAKE_PICTURE = 0x000000;
-    private String path = "";
-
-    public void photo() {
-        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = FileUtil.createFile(Constants.IMAGE, String.valueOf(System.currentTimeMillis())
-                + Constants.IMAGE_FORMAT);
-        if(file != null) {
-            path = file.getPath();
-            Uri imageUri = Uri.fromFile(file);
-            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(openCameraIntent, TAKE_PICTURE);
-        } else {
-            UIHelper.showToast(this, "不支持SD卡");
-        }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK ) {
-            switch (requestCode) {
-                case TAKE_PICTURE:
-                    if (Bimp.drr.size() < 9) {
-                        Bimp.drr.add(path);
-                    }
-                    else {
-                        UIHelper.showToast(this, "不能超过9张");
-                    }
-                    break;
-            }
         }
     }
 
