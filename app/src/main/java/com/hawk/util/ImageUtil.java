@@ -47,18 +47,20 @@ public class ImageUtil {
      * 获取图片
      *
      * @param filePath
-     * @param opts
      */
-    public static Bitmap getBitmapByPath(String filePath, BitmapFactory.Options opts) {
+    public static Bitmap getBitmapByPath(String filePath) {
         FileInputStream fis = null;
         Bitmap bitmap = null;
         try {
-            File file = new File(filePath);
-            fis = new FileInputStream(file);
-            bitmap = BitmapFactory.decodeStream(fis, null, opts);
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(filePath, opts);
+
+            opts.inSampleSize = ImageUtil.computeSampleSize(
+                    opts, -1, 1200 * 1200);
+            opts.inJustDecodeBounds = false;
+            bitmap = BitmapFactory.decodeFile(filePath, opts);
             Log.e("", "获取图片文件成功");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
         } finally {
@@ -68,6 +70,48 @@ public class ImageUtil {
             }
         }
         return bitmap;
+    }
+
+    public static int computeSampleSize(BitmapFactory.Options options,
+                                        int minSideLength, int maxNumOfPixels) {
+        int initialSize = computeInitialSampleSize(options, minSideLength,
+                maxNumOfPixels);
+
+        int roundedSize;
+        if (initialSize <= 8) {
+            roundedSize = 1;
+            while (roundedSize < initialSize) {
+                roundedSize <<= 1;
+            }
+        } else {
+            roundedSize = (initialSize + 7) / 8 * 8;
+        }
+
+        return roundedSize;
+    }
+
+    private static int computeInitialSampleSize(BitmapFactory.Options options,
+                                                int minSideLength, int maxNumOfPixels) {
+        double w = options.outWidth;
+        double h = options.outHeight;
+
+        int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math
+                .sqrt(w * h / maxNumOfPixels));
+        int upperBound = (minSideLength == -1) ? 128 : (int) Math.min(
+                Math.floor(w / minSideLength), Math.floor(h / minSideLength));
+
+        if (upperBound < lowerBound) {
+            // return the larger one when there is no overlapping zone.
+            return lowerBound;
+        }
+
+        if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+            return 1;
+        } else if (minSideLength == -1) {
+            return lowerBound;
+        } else {
+            return upperBound;
+        }
     }
 
     /**

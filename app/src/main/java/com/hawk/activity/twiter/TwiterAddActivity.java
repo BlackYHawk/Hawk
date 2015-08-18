@@ -226,12 +226,17 @@ public class TwiterAddActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case TAKE_PICTURE:
-                if (Bimp.drr.size() < 9 && resultCode == -1) {
-                    Bimp.drr.add(path);
-                }
-                break;
+        if(resultCode == RESULT_OK ) {
+            switch (requestCode) {
+                case TAKE_PICTURE:
+                    if (Bimp.drr.size() < 9) {
+                        Bimp.drr.add(path);
+                    }
+                    else {
+                        UIHelper.showToast(this, "不能超过9张");
+                    }
+                    break;
+            }
         }
     }
 
@@ -295,6 +300,7 @@ public class TwiterAddActivity extends AppCompatActivity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
         LOG.Error(TAG, "onDestroy");
+        Bimp.clear();
         AppContext.getRefWatcher(this).watch(this);
 	}
 

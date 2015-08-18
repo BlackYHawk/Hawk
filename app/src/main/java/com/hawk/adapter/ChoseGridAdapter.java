@@ -26,7 +26,17 @@ public class ChoseGridAdapter extends BaseAdapter {
     private LayoutInflater inflater; // 视图容器
     private List<ImageItem> items;
 
+    private ImageCheckListener imageCheckListener;
     private BitmapCache cache;
+
+
+    public interface ImageCheckListener {
+        public void check(boolean chose, ImageItem imageItem);
+    }
+
+    public void setImageCheckListener(ImageCheckListener imageCheckListener) {
+        this.imageCheckListener = imageCheckListener;
+    }
 
     BitmapCache.ImageCallback callback = new BitmapCache.ImageCallback() {
         @Override
@@ -108,9 +118,13 @@ public class ChoseGridAdapter extends BaseAdapter {
                     item.isSelected = true;
                     holder1.selected.setVisibility(View.VISIBLE);
                     holder1.selected.setImageResource(R.drawable.bg_transparent);
+
+                    imageCheckListener.check(true, item);
                 } else {
                     item.isSelected = false;
                     holder1.selected.setVisibility(View.GONE);
+
+                    imageCheckListener.check(false, item);
                 }
             }
         });

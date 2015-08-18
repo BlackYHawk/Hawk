@@ -7,9 +7,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
@@ -106,14 +103,10 @@ public class BitmapCache {
 	}
 
 	public Bitmap revitionImageSize(String path) throws IOException {
-		BufferedInputStream in = new BufferedInputStream(new FileInputStream(
-				new File(path)));
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeStream(in, null, options);
-		in.close();
 
-		Bitmap bitmap = null;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
         options.inSampleSize = 5;
         float imagew = 150;
@@ -132,8 +125,7 @@ public class BitmapCache {
 
         }
         options.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeStream(in, null, options);
-
+        bitmap = BitmapFactory.decodeFile(path, options);
 		return bitmap;
 	}
 

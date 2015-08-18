@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.hawk.activity.R;
 import com.hawk.activity.twiter.view.AlbumPopupWindow;
 import com.hawk.adapter.ChoseGridAdapter;
+import com.hawk.data.cache.Bimp;
 import com.hawk.data.model.ImageBucket;
 import com.hawk.data.model.ImageItem;
 
@@ -29,7 +30,8 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ImageChoseGridActivity extends AppCompatActivity implements View.OnClickListener, AlbumPopupWindow.AlbumClickListener {
+public class ImageChoseGridActivity extends AppCompatActivity implements View.OnClickListener,
+        AlbumPopupWindow.AlbumClickListener, ChoseGridAdapter.ImageCheckListener {
 
     private static String TAG = "ImageChoseGridActivity";
     private Toolbar toolbar;
@@ -43,6 +45,7 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
     private HashMap<String, ImageBucket> buckets;
     private List<ImageItem> wholeItems;
     private List<ImageItem> items;
+    private List<ImageItem> choseItems;
 
     private RelativeLayout album_relativeLayout;
     private AlbumPopupWindow albumPopupWindow;
@@ -62,6 +65,7 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
         buckets = new HashMap<String, ImageBucket>();
         items = new ArrayList<ImageItem>();
         wholeItems = new ArrayList<ImageItem>();
+        choseItems = new ArrayList<ImageItem>();
     }
 
     private void initView() {
@@ -89,7 +93,18 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
 
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
         choseGridAdapter = new ChoseGridAdapter(this, items);
+        choseGridAdapter.setImageCheckListener(this);
         noScrollgridview.setAdapter(choseGridAdapter);
+    }
+
+    @Override
+    public void check(boolean chose, ImageItem imageItem) {
+        if(chose) {
+            choseItems.add(imageItem);
+        }
+        else {
+            choseItems.remove(imageItem);
+        }
     }
 
     @Override
@@ -123,7 +138,12 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
 
         switch (v.getId()) {
             case R.id.action_finish :
-
+                if (Bimp.drr.size() < 9) {
+                    for(ImageItem imageItem : choseItems) {
+                        Bimp.drr.add(imageItem.imagePath);
+                    }
+                }
+                finish();
                 break;
             case R.id.photo_album :
                 albumPopupWindow = new AlbumPopupWindow(ImageChoseGridActivity.this, buckets, this);

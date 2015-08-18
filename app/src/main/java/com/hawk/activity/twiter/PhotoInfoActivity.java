@@ -80,7 +80,7 @@ public class PhotoInfoActivity extends Activity {
 		pager = (ViewPager) findViewById(R.id.viewpager);
 		pager.setOnPageChangeListener(pageChangeListener);
 		for (int i = 0; i < Bimp.drr.size(); i++) {
-            Bitmap bitmap = ImageUtil.getBitmapByPath(Bimp.drr.get(i), null); //根据SD路径获取图片
+            Bitmap bitmap = ImageUtil.getBitmapByPath(Bimp.drr.get(i)); //根据SD路径获取图片
 			initListViews(bitmap);
 		}
 
@@ -97,12 +97,13 @@ public class PhotoInfoActivity extends Activity {
 	private void initListViews(Bitmap bm) {
 		if (listViews == null)
 			listViews = new ArrayList<View>();
-		ImageView img = new ImageView(this);// 构造textView对象
-		img.setBackgroundColor(0xff000000);
-		img.setImageBitmap(bm);
-		img.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+		ImageView imageView = new ImageView(this);// 构造textView对象
+        imageView.setBackgroundColor(0xff000000);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setImageBitmap(bm);
+        imageView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
-		listViews.add(img);// 添加view
+		listViews.add(imageView);// 添加view
 	}
 
 	private OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
