@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new CustomItemAnimator());
 
-        twiterAdapter = new TwiterAdapter(this, R.layout.item_twiter_list, twiters);
+        twiterAdapter = new TwiterAdapter(this, twiters);
         recyclerView.setAdapter(twiterAdapter);
 
         swipeRefreshLayout.setColorSchemeColors(R.color.theme_accent);
@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onPreExecute();
             swipeRefreshLayout.setRefreshing(true);
             twiters.clear();
-            twiterAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -198,9 +197,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 twiters.addAll(loadTwiters);
             }
-
-            Twiter twiter = new Twiter("First", "I am Hawk!", "2014");
-            twiters.add(twiter);
 
             return null;
         }

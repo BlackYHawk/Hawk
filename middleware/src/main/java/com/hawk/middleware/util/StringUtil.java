@@ -139,21 +139,18 @@ public class StringUtil {
 	  */
 	 public static String transformListToStringEX(List<String> list){
 		  if(null == list){
-		   return null;
+		      return "";
 		  }
 		  
 		  StringBuffer result = new StringBuffer();
-		  if(null == result){
-		   return null;
-		  }
 		  
 		  boolean isFirst = true;
 		  for(String str : list){
-		   if(!isFirst){
-		    result.append(STRING_COMMA);
-		   }
-		   result.append(str);
-		   isFirst = false;
+			  if(!isFirst){
+		         result.append(STRING_COMMA);
+			  }
+		      result.append(str);
+			  isFirst = false;
 		  }
 		  
 		  return result.toString();

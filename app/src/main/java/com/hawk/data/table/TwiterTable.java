@@ -15,6 +15,7 @@ public class TwiterTable extends BaseTable {
 	public static final String ID = "id";
 	public static final String IMG_PATHS = "img_paths";
 	public static final String COMMENTS = "comments";
+	public static final String TIME = "time";
 	
 	public static TwiterTable getInstance()
 	{
@@ -35,10 +36,11 @@ public class TwiterTable extends BaseTable {
 		Twiter model = (Twiter)arg0;
 
 		String sql = " INSERT INTO " + TABLE_NAME 
-				+ "(" + ID + ","  + IMG_PATHS + "," + COMMENTS + ")"
+				+ "(" + ID + ","  + IMG_PATHS + "," + COMMENTS + "," + TIME + ")"
 				+ " VALUES('" + model.id + "','"
 				+ StringUtil.transformListToStringEX(model.imgPaths) + "','"
-				+ StringUtil.transformListToStringEX(model.comments) + "'"
+				+ StringUtil.transformListToStringEX(model.comments) + "','"
+				+ model.time + "'"
 				+ " )";
 		
 		return sql;
@@ -54,6 +56,8 @@ public class TwiterTable extends BaseTable {
 				+ IMG_PATHS + " " + "TEXT," + " "
 				// 时间
 				+ COMMENTS + " " + "TEXT," + " "
+				// 时间
+				+ TIME + " " + "TEXT," + " "
 				//设置主键
 				+ " PRIMARY KEY ( " + ID + " )"
 				// 结束

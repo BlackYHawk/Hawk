@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ImageUtil {
 
@@ -44,7 +45,40 @@ public class ImageUtil {
 	}
 
     /**
-     * 获取图片
+     * 获取缩略图片
+     *
+     * @param path
+     */
+    public static Bitmap revitionImageSize(String path) throws IOException {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+
+        options.inSampleSize = 5;
+        float imagew = 150;
+        float imageh = 150;
+        int yRatio = (int) Math.ceil(options.outHeight
+                / imageh);
+        int xRatio = (int) Math
+                .ceil(options.outWidth / imagew);
+
+        if (yRatio > 1 || xRatio > 1) {
+            if (yRatio > xRatio) {
+                options.inSampleSize = yRatio;
+            } else {
+                options.inSampleSize = xRatio;
+            }
+
+        }
+        options.inJustDecodeBounds = false;
+        bitmap = BitmapFactory.decodeFile(path, options);
+
+        return bitmap;
+    }
+
+    /**
+     * 获取缩略图片
      *
      * @param filePath
      */

@@ -11,6 +11,7 @@ public class Twiter implements Serializable {
     public String id;
     public List<String> imgPaths;   //上传的图片列表
     public List<String> comments;   //评论列表的ID
+    public String time;
 
     public Twiter () {
 

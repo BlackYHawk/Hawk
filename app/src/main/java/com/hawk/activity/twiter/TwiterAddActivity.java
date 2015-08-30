@@ -1,39 +1,26 @@
 package com.hawk.activity.twiter;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hawk.activity.R;
-import com.hawk.adapter.GridAdapter;
+import com.hawk.activity.twiter.adapter.ImageAdapter;
 import com.hawk.application.AppContext;
 import com.hawk.data.cache.Bimp;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
-import com.hawk.middleware.util.FileUtil;
+import com.hawk.itemanimator.CustomItemAnimator;
 import com.hawk.middleware.util.StringUtil;
-import com.hawk.util.Constants;
-import com.hawk.util.ImageUtil;
 import com.hawk.util.LOG;
-import com.hawk.util.UIHelper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -47,16 +34,10 @@ public class TwiterAddActivity extends AppCompatActivity {
     private TextView title;
     private ImageButton actionFinish;
 
-    private EditText mContent;        //内容
-    private LinearLayout mClearwords;
-    private TextView mNumberWords;    //清除
-
-    private GridView noScrollgridview;
-    private GridAdapter adapter;
-    private InputMethodManager imm;
+    private RecyclerView recyclerView;
+    private ImageAdapter adapter;
 
     private TwiterDBManager twiterDBManager;
-	private Twiter twiter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,80 +59,19 @@ public class TwiterAddActivity extends AppCompatActivity {
         title.setText(R.string.activity_twiter_add);
         actionFinish = (ImageButton) findViewById(R.id.action_finish);
 
-        mContent = (EditText)this.findViewById(R.id.twiter_pub_content);
-        mClearwords = (LinearLayout)this.findViewById(R.id.twiter_pub_clearwords);
-        mNumberWords = (TextView)mClearwords.findViewById(R.id.twiter_pub_numberwords);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setItemAnimator(new CustomItemAnimator());
 
-        // 编辑器添加文本监听
-        mContent.addTextChangedListener(new TextWatcher(){
+        adapter = new ImageAdapter(this, Bimp.bmp);
+        recyclerView.setAdapter(adapter);
 
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1,
-                                          int arg2, int arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                // TODO Auto-generated method stub
-                mNumberWords.setText((MAX_TEXT_LENGTH - s.length()) + "");
-            }
-
-        });
-
-        mClearwords.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // TODO Auto-generated method stub
-                String content = mContent.getText().toString();
-                if (!StringUtil.isEmpty(content)) {
-                    UIHelper.showClearWordsDialog(TwiterAddActivity.this, mContent);
-                }
-            }
-        });
-
-        noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
-        noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter = new GridAdapter(this);
-        noScrollgridview.setAdapter(adapter);
-        noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                if (arg2 == Bimp.bmp.size()) {
-                    Intent intent = new Intent(TwiterAddActivity.this,
-                            ImageChoseGridActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(TwiterAddActivity.this,
-                            PhotoInfoActivity.class);
-                    intent.putExtra("ID", arg2);
-                    startActivity(intent);
-                }
-            }
-        });
         actionFinish.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // 高清的压缩图片全部就在  list 路径里面了
-                // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-                // 完成上传服务器后 .........
-                //FileUtils.deleteDir();
-                finish();
+                new SubmitTask().execute();
             }
         });
-
-		// 软键盘管理类
-	    imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         twiterDBManager = TwiterDBManager.getInstance(this);
 
@@ -170,8 +90,6 @@ public class TwiterAddActivity extends AppCompatActivity {
                         LOG.Error(TAG, path);
                         Bitmap bm = Bimp.revitionImageSize(path);
                         Bimp.bmp.add(bm);
-                        String newStr = FileUtil.getFileName(path);
-                        ImageUtil.saveBitmap(bm, Constants.TEMP_IMAGE, newStr);
                         Bimp.max += 1;
                     } while(Bimp.max < Bimp.drr.size());
                     return null;
@@ -186,57 +104,41 @@ public class TwiterAddActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            adapter.update();
+            adapter.notifyDataSetChanged();
         }
     }
 
-    private Handler handler = new Handler()
-	{
-		public void handleMessage(Message msg)
-		{
-			if(msg.what == 1)
-			{
-				Toast.makeText(TwiterAddActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
-				TwiterAddActivity.this.finish();
-			}
-			else if(msg.what == 0)
-			{
-				Toast.makeText(TwiterAddActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
-			}
-		}
-	};
+    public class SubmitTask extends AsyncTask<Void, Void, Void> {
 
-    private void addTwiterAsyn()
-	{
-		final String content = mContent.getText().toString();
-		if(content == null || content.equalsIgnoreCase(""))
-		{
-			Toast.makeText(TwiterAddActivity.this, "请输入", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //设置日期格式
-		String time = df.format(new Date());
-		
-		twiter = new Twiter();
-        twiter.id = StringUtil.getUUID();
-        twiter.content = content;
-        twiter.time = time;
-		
-		new Thread(){
-			public void run()
-			{
-				addTwiter(twiter);
-			}
-		}.start();
-	}
-	
-	private void addTwiter(Twiter twiter)
-	{
-		twiterDBManager.addTwiter(twiter);
-		handler.sendEmptyMessage(1);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
-	}
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //设置日期格式
+            String time = df.format(new Date());
+
+            Twiter twiter = new Twiter();
+            twiter.id = StringUtil.getUUID();
+            twiter.imgPaths = Bimp.drr;
+            twiter.comments = null;
+            twiter.time = time;
+
+            twiterDBManager.addTwiter(twiter);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(TwiterAddActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+            TwiterAddActivity.this.finish();
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -250,6 +152,7 @@ public class TwiterAddActivity extends AppCompatActivity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
         LOG.Error(TAG, "onDestroy");
+
         Bimp.clear();
         AppContext.getRefWatcher(this).watch(this);
 	}

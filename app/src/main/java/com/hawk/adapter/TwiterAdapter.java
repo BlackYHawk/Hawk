@@ -1,11 +1,11 @@
 package com.hawk.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.hawk.activity.R;
 import com.hawk.data.model.Twiter;
@@ -19,12 +19,10 @@ import java.util.List;
 public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder> {
 
     private Context context;
-    private int resourceId;
     private List<Twiter> twiters;
 
-    public TwiterAdapter(Context context, int resourceId, List<Twiter> twiters ) {
+    public TwiterAdapter(Context context, List<Twiter> twiters ) {
         this.context = context;
-        this.resourceId = resourceId;
 
         if(twiters != null) {
             this.twiters = twiters;
@@ -45,7 +43,7 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resourceId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_twiter_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,14 +51,9 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Twiter twiter = twiters.get(position);
 
-        holder.title.setText(twiter.title);
-        holder.content.setText(twiter.content);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        TwiterSubAdapter twiterSubAdapter = new TwiterSubAdapter(context, twiter.imgPaths);
+        holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+        holder.recyclerView.setAdapter(twiterSubAdapter);
 
     }
 
@@ -69,14 +62,12 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
         return twiters != null ? twiters.size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView content;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.twiter_title);
-            content = (TextView) itemView.findViewById(R.id.twiter_content);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycleView);
         }
     }
 }

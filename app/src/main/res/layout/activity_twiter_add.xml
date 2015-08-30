@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical" >
 
@@ -44,75 +44,11 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/twiter_pub_form"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:visibility="visible" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <EditText
-                    android:id="@+id/twiter_pub_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_margin="8dp"
-                    android:autoLink="web"
-                    android:background="@null"
-                    android:gravity="left|top"
-                    android:textColor="@color/black"
-                    android:hint="@string/activity_twiter_hint" />
-
-                <LinearLayout
-                    android:id="@+id/twiter_pub_clearwords"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginBottom="5.0dip"
-                    android:layout_marginRight="5.0dip"
-                    android:background="@drawable/clearwords_bg"
-                    android:clickable="true"
-                    android:gravity="center" >
-
-                    <TextView
-                        android:id="@+id/twiter_pub_numberwords"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/activity_twiter_len_limit"
-                        android:textColor="@color/black" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dip"
-                        android:src="@drawable/clearwords_icon" />
-                </LinearLayout>
-            </FrameLayout>
-
-            <GridView
-                android:id="@+id/noScrollgridview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
-                android:horizontalSpacing="3dp"
-                android:numColumns="4"
-                android:scrollbars="none"
-                android:verticalSpacing="5dp" />
-
-        </LinearLayout>
-
-    </FrameLayout>
-
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
 </LinearLayout>
