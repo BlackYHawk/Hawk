@@ -19,4 +19,7 @@
     <color name="dark_gray">#585858</color>
 
     <color name="black">#000</color>
+    <color name="drawer_item_default">@color/dark_gray</color>
+    <color name="drawer_item_checked">@color/black</color>
+
 </resources>

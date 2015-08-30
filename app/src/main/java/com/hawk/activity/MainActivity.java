@@ -1,8 +1,12 @@
 package com.hawk.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -27,12 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    private final Handler mDrawerActionHandler = new Handler();
+    private static final long DRAWER_CLOSE_DELAY_MS = 250;
+    private int mNavItemId;
 
     private FrameLayout drawerContainer;
     private ProgressBar progressBar;
@@ -59,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
-        drawerMenu = new DrawerMenu();
-        drawView = findViewById(R.id.drawer_menu);
-        getSupportFragmentManager().beginTransaction().add(R.id.drawer_menu, drawerMenu, DrawerFlag).commit();
+//        drawerMenu = new DrawerMenu();
+//        drawView = findViewById(R.id.drawer_menu);
+//        getSupportFragmentManager().beginTransaction().add(R.id.drawer_menu, drawerMenu, DrawerFlag).commit();
 
         twiterDBManager = TwiterDBManager.getInstance(this);
         twiters = new ArrayList<Twiter>();
@@ -128,6 +136,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void navigate(final int itemId) {
+        // perform the actual navigation logic, updating the main content fragment etc
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        menuItem.setChecked(true);
+        mNavItemId = menuItem.getItemId();
+
+        // allow some time after closing the drawer before performing real navigation
+        // so the user can see what is happening
+        drawerLayout.closeDrawer(GravityCompat.START);
+        mDrawerActionHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                navigate(mNavItemId);
+            }
+        }, DRAWER_CLOSE_DELAY_MS);
+        return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private class InitalDataTask extends AsyncTask<Void, Void, Void> {

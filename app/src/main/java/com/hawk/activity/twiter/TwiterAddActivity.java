@@ -10,12 +10,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.hawk.middleware.util.StringUtil;
 import com.hawk.util.Constants;
 import com.hawk.util.ImageUtil;
 import com.hawk.util.LOG;
+import com.hawk.util.UIHelper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -38,10 +42,15 @@ import java.util.Date;
 public class TwiterAddActivity extends AppCompatActivity {
 
     private static String TAG = "AddTwiterActivity";
+    private static final int MAX_TEXT_LENGTH = 160;// 最大输入字数
     private Toolbar toolbar;
     private TextView title;
     private ImageButton actionFinish;
+
     private EditText mContent;        //内容
+    private LinearLayout mClearwords;
+    private TextView mNumberWords;    //清除
+
     private GridView noScrollgridview;
     private GridAdapter adapter;
     private InputMethodManager imm;
@@ -70,6 +79,46 @@ public class TwiterAddActivity extends AppCompatActivity {
         actionFinish = (ImageButton) findViewById(R.id.action_finish);
 
         mContent = (EditText)this.findViewById(R.id.twiter_pub_content);
+        mClearwords = (LinearLayout)this.findViewById(R.id.twiter_pub_clearwords);
+        mNumberWords = (TextView)mClearwords.findViewById(R.id.twiter_pub_numberwords);
+
+        // 编辑器添加文本监听
+        mContent.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // TODO Auto-generated method stub
+                mNumberWords.setText((MAX_TEXT_LENGTH - s.length()) + "");
+            }
+
+        });
+
+        mClearwords.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // TODO Auto-generated method stub
+                String content = mContent.getText().toString();
+                if (!StringUtil.isEmpty(content)) {
+                    UIHelper.showClearWordsDialog(TwiterAddActivity.this, mContent);
+                }
+            }
+        });
+
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new GridAdapter(this);

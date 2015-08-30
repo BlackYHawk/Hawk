@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.gc.materialdesign.views.CheckBox;
 import com.hawk.activity.R;
 import com.hawk.data.cache.BitmapCache;
 import com.hawk.data.model.ImageItem;
+import com.hawk.view.CheckBox;
 
 import java.util.List;
 
@@ -137,8 +137,8 @@ public class ChoseGridAdapter extends BaseAdapter {
             final ViewHolder holder1 = holder;
             holder.checkBox.setOncheckListener(new CheckBox.OnCheckListener() {
                 @Override
-                public void onCheck(CheckBox checkBox, boolean b) {
-                    if (b) {
+                public void onCheck(boolean check) {
+                    if (check) {
                         item.isSelected = true;
                         holder1.selected.setVisibility(View.VISIBLE);
                         holder1.selected.setImageResource(R.drawable.bg_transparent);

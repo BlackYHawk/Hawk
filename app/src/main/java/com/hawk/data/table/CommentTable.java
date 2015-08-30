@@ -2,28 +2,28 @@ package com.hawk.data.table;
 
 import android.content.ContentValues;
 
-import com.hawk.data.model.Twiter;
+import com.hawk.data.model.Comment;
 import com.hawk.middleware.sqlite.BaseTable;
-import com.hawk.middleware.util.StringUtil;
 
-public class TwiterTable extends BaseTable {
-	private static TwiterTable instance = null;
+public class CommentTable extends BaseTable {
+	private static CommentTable instance = null;
 
 	//表名称
-	public static final String TABLE_NAME = "twiter";
+	public static final String TABLE_NAME = "comment";
 
 	public static final String ID = "id";
-	public static final String IMG_PATHS = "img_paths";
-	public static final String COMMENTS = "comments";
-	
-	public static TwiterTable getInstance()
+    public static final String NICKNAME = "nickname";
+	public static final String COMMENT = "comment";
+	public static final String TIME = "time";
+
+	public static CommentTable getInstance()
 	{
 		if(instance == null)
-			instance = new TwiterTable();
+			instance = new CommentTable();
 		return instance;
 	}
-	
-	private TwiterTable(){}
+
+	private CommentTable(){}
 	
 	@Override
 	public <T> String generateSql(T arg0) {
@@ -32,13 +32,14 @@ public class TwiterTable extends BaseTable {
 			return null;
 		}
 		
-		Twiter model = (Twiter)arg0;
-
+		Comment model = (Comment)arg0;
+		
 		String sql = " INSERT INTO " + TABLE_NAME 
-				+ "(" + ID + ","  + IMG_PATHS + "," + COMMENTS + ")"
+				+ "(" + ID + "," + NICKNAME + "," + COMMENT + "," + TIME + ")"
 				+ " VALUES('" + model.id + "','"
-				+ StringUtil.transformListToStringEX(model.imgPaths) + "','"
-				+ StringUtil.transformListToStringEX(model.comments) + "'"
+				+ model.nickname + "','"
+				+ model.comment + "','"
+				+ model.time + "'"
 				+ " )";
 		
 		return sql;
@@ -50,10 +51,12 @@ public class TwiterTable extends BaseTable {
 		String sql = "CREATE TABLE IF NOT EXISTS" + " " + TABLE_NAME + " " + "("
 				// 主键
 				+ ID + " " + "TEXT," + " "
-				// 动态ID,非空
-				+ IMG_PATHS + " " + "TEXT," + " "
+                // 标题
+                + NICKNAME + " " + "TEXT," + " "
+				// 内容
+				+ COMMENT + " " + "TEXT," + " "
 				// 时间
-				+ COMMENTS + " " + "TEXT," + " "
+				+ TIME + " " + "TEXT," + " "
 				//设置主键
 				+ " PRIMARY KEY ( " + ID + " )"
 				// 结束

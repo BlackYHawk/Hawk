@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_share"
+            android:title="@string/action_share"
+            android:icon="@drawable/func_share"/>
+        <item
+            android:id="@+id/nav_photo"
+            android:title="@string/action_photo"
+            android:icon="@drawable/func_photo"/>
+    </group>
+</menu>

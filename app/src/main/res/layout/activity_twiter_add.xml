@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="title"
-                    android:textSize="@dimen/text_size_20" />
+                    android:textSize="@dimen/text_size_20"/>
 
                 <ImageButton
                     android:id="@+id/action_finish"
@@ -58,15 +58,46 @@
             android:paddingRight="10dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/twiter_pub_content"
-                android:layout_width="fill_parent"
-                android:layout_height="150dp"
-                android:layout_margin="8dp"
-                android:autoLink="web"
-                android:background="@null"
-                android:gravity="left|top"
-                android:hint="@string/activity_twiter_hint" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/twiter_pub_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="8dp"
+                    android:autoLink="web"
+                    android:background="@null"
+                    android:gravity="left|top"
+                    android:textColor="@color/black"
+                    android:hint="@string/activity_twiter_hint" />
+
+                <LinearLayout
+                    android:id="@+id/twiter_pub_clearwords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginBottom="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@drawable/clearwords_bg"
+                    android:clickable="true"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/twiter_pub_numberwords"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_twiter_len_limit"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dip"
+                        android:src="@drawable/clearwords_icon" />
+                </LinearLayout>
+            </FrameLayout>
 
             <GridView
                 android:id="@+id/noScrollgridview"

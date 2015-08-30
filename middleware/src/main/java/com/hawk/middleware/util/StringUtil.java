@@ -1,6 +1,10 @@
 
 package com.hawk.middleware.util;
 
+import android.content.Context;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,10 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import org.json.JSONObject;
-
-import android.content.Context;
 
 /**
  *字符工具类
@@ -185,7 +185,33 @@ public class StringUtil {
 		 return list;
 	  
 	 }
-	 
+
+	/**
+	 * 将使用","做分隔符的String转成list
+	 */
+	public static List<String> transformStringToListEX(String str){
+		if(null == str || str.length() <= 0){
+			return null;
+		}
+
+		String items[] = str.split(STRING_COMMA);
+		if(null == items){
+			return null;
+		}
+
+		List<String> list = new ArrayList<String>();
+		if(null == list){
+			return null;
+		}
+
+		for(String item:items){
+			list.add(item);
+		}
+
+		return list;
+
+	}
+
 	 /**
 	  * 将字符串转成Date,字符串格式"yyyy-MM-dd"
 	  */

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.hawk.data.model.Twiter;
 import com.hawk.data.table.TwiterTable;
 import com.hawk.middleware.sqlite.BaseDbHelper;
+import com.hawk.middleware.util.StringUtil;
 
 import java.util.List;
 
@@ -117,9 +118,13 @@ public class TwiterDBManager extends HBaseDBManager {
 		Twiter model = new Twiter();
 		
 		model.id = BaseDbHelper.getStringValue(cursor, TwiterTable.ID);
-		model.title = BaseDbHelper.getStringValue(cursor, TwiterTable.TITLE);
-		model.content = BaseDbHelper.getStringValue(cursor, TwiterTable.CONTENT);
-		model.time = BaseDbHelper.getStringValue(cursor, TwiterTable.TIME);
+
+		String imgPaths = BaseDbHelper.getStringValue(cursor, TwiterTable.IMG_PATHS);
+		String comments = BaseDbHelper.getStringValue(cursor, TwiterTable.COMMENTS);
+
+		model.imgPaths = StringUtil.transformStringToListEX(imgPaths);
+		model.comments = StringUtil.transformStringToListEX(comments);
+
 		
 		return model;
 	}
