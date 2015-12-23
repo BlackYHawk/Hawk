@@ -44,11 +44,54 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_add_form"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/twiter_add_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:autoLink="web"
+            android:gravity="top"
+            android:textColor="@color/black"
+            android:hint="@string/activity_twiter_hint"
+            android:textColorHint="@color/half_black"
+            android:background="@null"/>
+
+        <LinearLayout
+            android:id="@+id/twiter_add_clearwords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5.0dip"
+            android:layout_marginBottom="5.0dip"
+            android:layout_gravity="right|bottom"
+            android:gravity="center"
+            android:background="@drawable/clearwords_bg"
+            android:clickable="true">
+            <TextView
+                android:id="@+id/twiter_add_numberwords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/activity_twiter_len_limit"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dip"
+                android:src="@drawable/clearwords_icon"/>
+        </LinearLayout>
+    </FrameLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_height="@dimen/activity_add_photo"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>

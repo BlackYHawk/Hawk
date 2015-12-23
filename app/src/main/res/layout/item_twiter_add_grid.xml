@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/item_grida_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop" >
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:scaleType="fitCenter" >
     </ImageView>
 
 </LinearLayout>

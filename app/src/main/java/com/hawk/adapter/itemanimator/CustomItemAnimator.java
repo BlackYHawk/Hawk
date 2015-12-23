@@ -1,4 +1,4 @@
-package com.hawk.itemanimator;
+package com.hawk.adapter.itemanimator;
 
 import android.support.v7.widget.RecyclerView;
 import java.util.List;

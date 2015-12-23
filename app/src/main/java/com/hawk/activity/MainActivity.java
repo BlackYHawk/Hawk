@@ -22,11 +22,12 @@ import android.widget.ProgressBar;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hawk.activity.twiter.TwiterAddActivity;
 import com.hawk.adapter.TwiterAdapter;
+import com.hawk.adapter.itemanimator.CustomItemAnimator;
+import com.hawk.adapter.itemdecoration.SpaceItemDecoration;
 import com.hawk.application.AppContext;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
 import com.hawk.fragment.DrawerMenu;
-import com.hawk.itemanimator.CustomItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
         recyclerView = (RecyclerView)findViewById(R.id.recycleView);
 
+        int spaceInPixel = getResources().getDimensionPixelOffset(R.dimen.divider_space);  //间距
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(spaceInPixel));
         recyclerView.setItemAnimator(new CustomItemAnimator());
 
         twiterAdapter = new TwiterAdapter(this, twiters);
@@ -121,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        new InitalDataTask().execute();
 
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
@@ -228,6 +230,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         twiterDBManager.deleteTwiter(twiter);
         twiters.remove(position);
         twiterAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        new InitalDataTask().execute();
     }
 
     @Override

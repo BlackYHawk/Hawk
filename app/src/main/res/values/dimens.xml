@@ -6,6 +6,11 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
 
+    <dimen name="activity_add_form">120dp</dimen>
+    <dimen name="activity_add_photo">240dp</dimen>
+
+    <dimen name="divider_space">5dp</dimen>
+
     <dimen name="text_size_24">24.0sp</dimen>
     <dimen name="text_size_23">23.0sp</dimen>
     <dimen name="text_size_22">22.0sp</dimen>

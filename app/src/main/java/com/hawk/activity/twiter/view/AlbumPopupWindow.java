@@ -12,7 +12,7 @@ import android.widget.PopupWindow;
 import com.hawk.activity.R;
 import com.hawk.activity.twiter.adapter.AlbumAdapter;
 import com.hawk.data.model.ImageBucket;
-import com.hawk.itemanimator.CustomItemAnimator;
+import com.hawk.adapter.itemanimator.CustomItemAnimator;
 
 import java.util.HashMap;
 
