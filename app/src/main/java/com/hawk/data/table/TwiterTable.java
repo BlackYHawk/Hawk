@@ -13,6 +13,7 @@ public class TwiterTable extends BaseTable {
 	public static final String TABLE_NAME = "twiter";
 
 	public static final String ID = "id";
+    public static final String CONTENT = "content";
 	public static final String IMG_PATHS = "img_paths";
 	public static final String COMMENTS = "comments";
 	public static final String TIME = "time";
@@ -36,8 +37,9 @@ public class TwiterTable extends BaseTable {
 		Twiter model = (Twiter)arg0;
 
 		String sql = " INSERT INTO " + TABLE_NAME 
-				+ "(" + ID + ","  + IMG_PATHS + "," + COMMENTS + "," + TIME + ")"
+				+ "(" + ID + ","  + CONTENT + "," + IMG_PATHS + "," + COMMENTS + "," + TIME + ")"
 				+ " VALUES('" + model.id + "','"
+                + model.content + "','"
 				+ StringUtil.transformListToStringEX(model.imgPaths) + "','"
 				+ StringUtil.transformListToStringEX(model.comments) + "','"
 				+ model.time + "'"
@@ -52,9 +54,11 @@ public class TwiterTable extends BaseTable {
 		String sql = "CREATE TABLE IF NOT EXISTS" + " " + TABLE_NAME + " " + "("
 				// 主键
 				+ ID + " " + "TEXT," + " "
-				// 动态ID,非空
+				// 动态内容
+				+ CONTENT + " " + "TEXT," + " "
+				// 图片列表
 				+ IMG_PATHS + " " + "TEXT," + " "
-				// 时间
+				// 评论列表
 				+ COMMENTS + " " + "TEXT," + " "
 				// 时间
 				+ TIME + " " + "TEXT," + " "

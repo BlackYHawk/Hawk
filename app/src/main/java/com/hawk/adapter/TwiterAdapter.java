@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hawk.activity.R;
 import com.hawk.data.model.Twiter;
@@ -51,6 +52,7 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Twiter twiter = twiters.get(position);
 
+        holder.content.setText(twiter.content);
         TwiterSubAdapter twiterSubAdapter = new TwiterSubAdapter(context, twiter.imgPaths);
         holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
         holder.recyclerView.setAdapter(twiterSubAdapter);
@@ -63,11 +65,13 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView content;
         public RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycleView);
+            content = (TextView) itemView.findViewById(R.id.twiter_content);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.twiter_photo);
         }
     }
 }

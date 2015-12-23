@@ -118,9 +118,10 @@ public class TwiterDBManager extends HBaseDBManager {
 		Twiter model = new Twiter();
 		
 		model.id = BaseDbHelper.getStringValue(cursor, TwiterTable.ID);
-
+		model.content = BaseDbHelper.getStringValue(cursor, TwiterTable.CONTENT);
 		String imgPaths = BaseDbHelper.getStringValue(cursor, TwiterTable.IMG_PATHS);
 		String comments = BaseDbHelper.getStringValue(cursor, TwiterTable.COMMENTS);
+		model.time = BaseDbHelper.getStringValue(cursor, TwiterTable.TIME);
 
 		model.imgPaths = StringUtil.transformStringToListEX(imgPaths);
 		model.comments = StringUtil.transformStringToListEX(comments);

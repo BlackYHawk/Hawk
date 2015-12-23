@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hawk.activity.R;
 import com.hawk.activity.twiter.adapter.ImageAdapter;
@@ -18,9 +21,10 @@ import com.hawk.application.AppContext;
 import com.hawk.data.cache.Bimp;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
-import com.hawk.itemanimator.CustomItemAnimator;
+import com.hawk.adapter.itemanimator.CustomItemAnimator;
 import com.hawk.middleware.util.StringUtil;
 import com.hawk.util.LOG;
+import com.hawk.util.UIHelper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,6 +37,10 @@ public class TwiterAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView title;
     private ImageButton actionFinish;
+
+    private LinearLayout mClearwords;
+    private EditText mContent;
+    private TextView mNumberWords;
 
     private RecyclerView recyclerView;
     private ImageAdapter adapter;
@@ -59,8 +67,49 @@ public class TwiterAddActivity extends AppCompatActivity {
         title.setText(R.string.activity_twiter_add);
         actionFinish = (ImageButton) findViewById(R.id.action_finish);
 
+        mClearwords = (LinearLayout) findViewById(R.id.twiter_add_clearwords);
+        mContent = (EditText) findViewById(R.id.twiter_add_content);
+        mNumberWords = (TextView) findViewById(R.id.twiter_add_numberwords);
+
+        // 编辑器添加文本监听
+        mContent.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // TODO Auto-generated method stub
+                mNumberWords.setText((MAX_TEXT_LENGTH - s.length()) + "");
+            }
+
+        });
+
+        mClearwords.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // TODO Auto-generated method stub
+                String content = mContent.getText().toString();
+                if (!StringUtil.isEmpty(content)) {
+                    UIHelper.showClearWordsDialog(TwiterAddActivity.this, mContent);
+                }
+            }
+        });
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerView.setItemAnimator(new CustomItemAnimator());
 
         adapter = new ImageAdapter(this, Bimp.bmp);
@@ -69,7 +118,14 @@ public class TwiterAddActivity extends AppCompatActivity {
         actionFinish.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                new SubmitTask().execute();
+                String content = mContent.getText().toString();
+                if(content == null || content.equalsIgnoreCase(""))
+                {
+                    UIHelper.showToast(TwiterAddActivity.this, "请输入");
+                    return;
+                }
+
+                new SubmitTask().execute(content);
             }
         });
 
@@ -108,7 +164,7 @@ public class TwiterAddActivity extends AppCompatActivity {
         }
     }
 
-    public class SubmitTask extends AsyncTask<Void, Void, Void> {
+    public class SubmitTask extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -116,13 +172,14 @@ public class TwiterAddActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //设置日期格式
             String time = df.format(new Date());
 
             Twiter twiter = new Twiter();
             twiter.id = StringUtil.getUUID();
+            twiter.content = params[0];
             twiter.imgPaths = Bimp.drr;
             twiter.comments = null;
             twiter.time = time;
@@ -135,7 +192,7 @@ public class TwiterAddActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(TwiterAddActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+            UIHelper.showToast(TwiterAddActivity.this, "发布成功");
             TwiterAddActivity.this.finish();
         }
     }
