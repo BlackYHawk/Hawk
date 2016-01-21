@@ -1,15 +1,15 @@
 package com.hawk.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hawk.activity.R;
 import com.hawk.data.model.Twiter;
+import com.hawk.view.TimelinePicsView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by heyong on 15/5/17.
  */
-public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder> {
+public class TwiterAdapter extends BaseAdapter {
 
     private Context context;
     private List<Twiter> twiters;
@@ -43,35 +43,52 @@ public class TwiterAdapter extends RecyclerView.Adapter<TwiterAdapter.ViewHolder
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_twiter_list, parent, false);
-        return new ViewHolder(view);
+    public int getCount() {
+        return twiters.size();
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public Object getItem(int position) {
+        return twiters.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        if(convertView == null) {
+            viewHolder = new ViewHolder();
+
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_twiter_list, parent, false);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.twiter_content);
+            viewHolder.timelinePicsView = (TimelinePicsView) convertView.findViewById(R.id.layPicturs);
+
+            convertView.setTag(viewHolder);
+        }
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
         Twiter twiter = twiters.get(position);
 
-        holder.content.setText(twiter.content);
-        TwiterSubAdapter twiterSubAdapter = new TwiterSubAdapter(context, twiter.imgPaths);
-        holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-        holder.recyclerView.setAdapter(twiterSubAdapter);
+        viewHolder.content.setText(twiter.content);
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return twiters != null ? twiters.size() : 0;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView content;
-        public RecyclerView recyclerView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            content = (TextView) itemView.findViewById(R.id.twiter_content);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.twiter_photo);
+        if(twiter.imgPaths != null && twiter.imgPaths.size() > 0) {
+            viewHolder.timelinePicsView.setPics(twiter.imgPaths);
         }
+        else {
+            viewHolder.timelinePicsView.setVisibility(View.GONE);
+        }
+
+        return convertView;
+    }
+
+    public final class ViewHolder {
+        public TextView content;
+        public TimelinePicsView timelinePicsView;
     }
 }

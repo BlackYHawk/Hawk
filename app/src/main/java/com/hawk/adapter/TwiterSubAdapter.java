@@ -2,10 +2,10 @@ package com.hawk.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.hawk.activity.R;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by heyong on 15/5/17.
  */
-public class TwiterSubAdapter extends RecyclerView.Adapter<TwiterSubAdapter.ViewHolder> {
+public class TwiterSubAdapter extends BaseAdapter {
 
     private Context context;
     private List<String> paths;
@@ -44,13 +44,36 @@ public class TwiterSubAdapter extends RecyclerView.Adapter<TwiterSubAdapter.View
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_twiter_sub, parent, false);
-        return new ViewHolder(view);
+    public int getCount() {
+        return paths.size();
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public Object getItem(int position) {
+        return paths.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
+
+        if(convertView == null) {
+            viewHolder = new ViewHolder();
+
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_twiter_sub, parent, false);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.item_grid_image);
+
+            convertView.setTag(viewHolder);
+        }
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
         String path = paths.get(position);
 
         Bitmap bm = null;
@@ -59,27 +82,18 @@ public class TwiterSubAdapter extends RecyclerView.Adapter<TwiterSubAdapter.View
         } catch (IOException e) {
             e.printStackTrace();
         }
-        holder.imageView.setImageBitmap(bm);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imageView.setImageBitmap(bm);
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
 
+        return convertView;
     }
 
-    @Override
-    public int getItemCount() {
-        return paths != null ? paths.size() : 0;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public final class ViewHolder {
         public ImageView imageView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.item_grid_image);
-        }
     }
 }

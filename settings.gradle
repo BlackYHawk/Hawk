@@ -1,1 +1,2 @@
-include ':app', ':middleware'
+include ':app', ':middleware', ':library'
+include ':swipeMenuListView'

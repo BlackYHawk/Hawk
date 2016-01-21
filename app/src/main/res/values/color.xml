@@ -22,4 +22,6 @@
     <color name="drawer_item_default">@color/dark_gray</color>
     <color name="drawer_item_checked">@color/black</color>
 
+    <color name="swipe_menu_delete">#F93F25</color>
+
 </resources>

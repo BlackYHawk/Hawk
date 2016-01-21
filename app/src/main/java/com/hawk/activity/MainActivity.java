@@ -11,19 +11,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hawk.activity.twiter.TwiterAddActivity;
 import com.hawk.adapter.TwiterAdapter;
-import com.hawk.adapter.itemanimator.CustomItemAnimator;
-import com.hawk.adapter.itemdecoration.SpaceItemDecoration;
 import com.hawk.application.AppContext;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout drawerContainer;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView recyclerView;
+    private ListView recyclerView;
     private TwiterAdapter twiterAdapter;
     private TwiterDBManager twiterDBManager;
     private List<Twiter> twiters;
@@ -87,15 +87,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerClosed(View drawerView) {
-
                 supportInvalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-
                 supportInvalidateOptionsMenu();
-
             }
 
         };
@@ -105,15 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerContainer = (FrameLayout) findViewById(R.id.drawer_container);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
-        recyclerView = (RecyclerView)findViewById(R.id.recycleView);
-
-        int spaceInPixel = getResources().getDimensionPixelOffset(R.dimen.divider_space);  //间距
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new SpaceItemDecoration(spaceInPixel));
-        recyclerView.setItemAnimator(new CustomItemAnimator());
+        recyclerView = (ListView)findViewById(R.id.recycleView);
 
         twiterAdapter = new TwiterAdapter(this, twiters);
         recyclerView.setAdapter(twiterAdapter);
+
 
         swipeRefreshLayout.setColorSchemeColors(R.color.theme_accent);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -121,6 +114,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onRefresh() {
 
                 new InitalDataTask().execute();
+            }
+        });
+
+        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "hh", Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(0, 0, 0, R.string.menu_delete);
             }
         });
 
@@ -138,12 +144,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        new InitalDataTask().execute();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0: {
+                AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                deleteTwiter(adapterContextMenuInfo.position);
+                break;
+            }
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void navigate(final int itemId) {
         // perform the actual navigation logic, updating the main content fragment etc
     }
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -235,8 +253,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-
-        new InitalDataTask().execute();
     }
 
     @Override

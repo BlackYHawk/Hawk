@@ -551,9 +551,19 @@ public class FileUtil {
         return new File(path).exists();
     }
 
-
-
-
+    /**
+     * 获取文件
+     *
+     * @param filePath
+     * @return
+     */
+    public static File getFile(String filePath) {
+        if (!filePath.equalsIgnoreCase("")) {
+            File file = new File(filePath);
+            return file;
+        }
+        return null;
+    }
 
     /**
      * 获取文件
