@@ -1,26 +1,21 @@
 package com.hawk.util;
 
-import java.io.File;
-
-import org.apache.http.HttpHost;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
-import android.net.Proxy;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.StatFs;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -28,7 +23,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.hawk.application.AppContext;
+import com.hawk.base.GlobalContext;
+
+import java.io.File;
+
 
 @SuppressLint("SdCardPath") public class SystemUtils {
 
@@ -44,7 +42,7 @@ import com.hawk.application.AppContext;
 
 	private static void setScreenInfo() {
 		DisplayMetrics dm = new DisplayMetrics();
-		WindowManager windowManager = (WindowManager) AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE);
+		WindowManager windowManager = (WindowManager) GlobalContext.getInstance().getSystemService(Context.WINDOW_SERVICE);
 		windowManager.getDefaultDisplay().getMetrics(dm);
 		screenWidth = dm.widthPixels;
 		screenHeight = dm.heightPixels;
@@ -130,7 +128,7 @@ import com.hawk.application.AppContext;
 
 	public static NetWorkType getNetworkType() {
 
-		ConnectivityManager connMgr = (ConnectivityManager) AppContext.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connMgr = (ConnectivityManager) GlobalContext.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
 
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
@@ -146,25 +144,13 @@ import com.hawk.application.AppContext;
 		return NetWorkType.none;
 	}
 
-	@SuppressWarnings("deprecation")
-	public static HttpHost getProxy() {
-		String host = Proxy.getDefaultHost();
-		if (!TextUtils.isEmpty(host)) {
-			int port = Proxy.getDefaultPort();
-			HttpHost proxy = new HttpHost(host, port);
-			return proxy;
-		}
-		return null;
-	}
-
 	/**
 	 * mac地址
-	 * 
-	 * @param mContext
+	 *
 	 * @return
 	 */
 	public static String getMacAddress() {
-		WifiManager wifiManager = (WifiManager) AppContext.getInstance().getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifiManager = (WifiManager) GlobalContext.getInstance().getSystemService(Context.WIFI_SERVICE);
 		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 		if (wifiInfo != null && wifiInfo.getMacAddress() != null)
 			return wifiInfo.getMacAddress().replace(":", "");
@@ -173,7 +159,7 @@ import com.hawk.application.AppContext;
 	}
 	
 	public static String getUDPIP() {
-		Context context = AppContext.getInstance();
+		Context context = GlobalContext.getInstance();
 		
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         DhcpInfo dhcpInfo = wifi.getDhcpInfo();
@@ -188,7 +174,7 @@ import com.hawk.application.AppContext;
     }
 	
 	public static String getIP() {
-		Context context = AppContext.getInstance();
+		Context context = GlobalContext.getInstance();
 		
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return transformIp(wifi.getConnectionInfo().getIpAddress());
@@ -228,11 +214,11 @@ import com.hawk.application.AppContext;
 		 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		 Uri uri = Uri.fromFile(file);
 		 intent.setData(uri);
-		 AppContext.getInstance().sendBroadcast(intent);
+		 GlobalContext.getInstance().sendBroadcast(intent);
 	}
 	
 	public static void hideSoftInput(View paramEditText) {
-		((InputMethodManager) AppContext.getInstance().getSystemService("input_method"))
+		((InputMethodManager) GlobalContext.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE))
 				.hideSoftInputFromWindow(paramEditText.getWindowToken(), 0);
 	}
 
@@ -241,7 +227,7 @@ import com.hawk.application.AppContext;
 		paramEditText.post(new Runnable() {
 			@Override
 			public void run() {
-				((InputMethodManager) AppContext.getInstance().getSystemService("input_method")).showSoftInput(paramEditText, 0);
+				((InputMethodManager) GlobalContext.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(paramEditText, 0);
 			}
 		});
 	}
@@ -258,6 +244,23 @@ import com.hawk.application.AppContext;
 		paramActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(localRect);
 		return localRect.top;
 
+	}
+
+	@SuppressWarnings("unused")
+	public static int getActionBarHeight(Activity paramActivity) {
+        if (true) return Utils.dip2px(56);
+
+		// test on samsung 9300 android 4.1.2, this value is 96px
+		// but on galaxy nexus android 4.2, this value is 146px
+		// statusbar height is 50px
+		// I guess 4.1 Window.ID_ANDROID_CONTENT contain statusbar
+//		int contentViewTop = paramActivity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+
+//        return contentViewTop - getStatusBarHeight(paramActivity);
+        
+		int[] attrs = new int[] { android.R.attr.actionBarSize };
+		TypedArray ta = paramActivity.obtainStyledAttributes(attrs);
+		return ta.getDimensionPixelSize(0, Utils.dip2px(56));
 	}
 
 	// below status bar,include actionbar, above softkeyboard

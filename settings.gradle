@@ -1,2 +1,2 @@
-include ':app', ':middleware', ':library'
+include ':app', ':middleware', ':library_orm'
 include ':swipeMenuListView'

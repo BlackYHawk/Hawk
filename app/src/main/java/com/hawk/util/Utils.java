@@ -1,34 +1,23 @@
 package com.hawk.util;
 
-import android.content.res.Resources;
 import android.util.TypedValue;
-import android.view.View;
+
+import com.hawk.base.GlobalContext;
 
 public class Utils {
-	
-	
-	/**
-	 * Convert Dp to Pixel
-	 */
-	public static int dpToPx(float dp, Resources resources){
-		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
-		return (int) px;
+
+	public static int dip2px(int dipValue) {
+		float reSize = GlobalContext.getInstance().getResources().getDisplayMetrics().density;
+		return (int) ((dipValue * reSize) + 0.5);
 	}
-	
-	public static int getRelativeTop(View myView) {
-//	    if (myView.getParent() == myView.getRootView())
-	    if(myView.getId() == android.R.id.content)
-	        return myView.getTop();
-	    else
-	        return myView.getTop() + getRelativeTop((View) myView.getParent());
+
+	public static int px2dip(int pxValue) {
+		float reSize = GlobalContext.getInstance().getResources().getDisplayMetrics().density;
+		return (int) ((pxValue / reSize) + 0.5);
 	}
-	
-	public static int getRelativeLeft(View myView) {
-//	    if (myView.getParent() == myView.getRootView())
-		if(myView.getId() == android.R.id.content)
-			return myView.getLeft();
-		else
-			return myView.getLeft() + getRelativeLeft((View) myView.getParent());
+
+	public static float sp2px(int spValue) {
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, GlobalContext.getInstance().getResources().getDisplayMetrics());
 	}
 	
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.hawk.activity.R;
+import com.hawk.ui.activity.R;
 import com.hawk.data.cache.Bimp;
 
 /**

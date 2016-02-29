@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.hawk.activity.R;
+import com.hawk.ui.activity.R;
 import com.hawk.data.cache.BitmapCache;
 import com.hawk.data.model.ImageItem;
-import com.hawk.view.CheckBox;
+import com.hawk.ui.widget.CheckBox;
 
 import java.util.List;
 

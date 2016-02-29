@@ -8,6 +8,7 @@
     <color name="accent_color">#FFC107</color>
     <color name="primary_text">#212121</color>
     <color name="theme_accent">@color/accent_color</color>
+    <color name="theme_background">#dcdee3</color>
 
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>
@@ -22,6 +23,34 @@
     <color name="drawer_item_default">@color/dark_gray</color>
     <color name="drawer_item_checked">@color/black</color>
 
+    <!--适配Materail Design后添加的颜色-->
+    <color name="text_100">#ff000000</color>
+    <color name="text_87">#dd000000</color>
+    <color name="text_80">#cc000000</color>
+    <color name="text_54">#69000000</color>
+
+    <color name="comm_white">#FFffffff</color>
+    <color name="comm_black">#FF000000</color>
+    <color name="comm_gray">#FF888888</color>
+    <color name="comm_blue">#FF52A0DB</color>
+    <color name="comm_red">#FFFF0000</color>
+    <color name="comm_transparent">#00000000</color>
+
+    <color name="link">#999966</color>
+    <color name="tips">#cfcfcf</color>
+
     <color name="swipe_menu_delete">#F93F25</color>
+
+    <color name="gplus_color_1">#3e802f</color>
+    <color name="gplus_color_2">#f4b400</color>
+    <color name="gplus_color_3">#427fed</color>
+    <color name="gplus_color_4">#b23424</color>
+
+    <integer-array name="gplus_colors">
+        <item>@color/gplus_color_1</item>
+        <item>@color/gplus_color_2</item>
+        <item>@color/gplus_color_3</item>
+        <item>@color/gplus_color_4</item>
+    </integer-array>
 
 </resources>

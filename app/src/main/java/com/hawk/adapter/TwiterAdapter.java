@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.hawk.activity.R;
+import com.hawk.ui.activity.R;
 import com.hawk.data.model.Twiter;
-import com.hawk.view.TimelinePicsView;
+import com.hawk.ui.widget.TimelinePicsView;
 
 import java.util.ArrayList;
 import java.util.List;

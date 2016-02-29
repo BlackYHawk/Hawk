@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e3e5e5"
+    tools:context=".SudokuActivity" >
+    
+    <TextView android:id="@+id/who"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/link"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+    
+    <com.hawk.ui.widget.SudokuView android:id="@+id/sudoku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/who"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="100dp"
+     />
+    
+    <TextView android:id="@+id/forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:text="@string/forget_password"
+        android:textColor="@color/link"
+        android:textSize="16sp"
+        android:textAlignment="center" />
+
+</RelativeLayout>

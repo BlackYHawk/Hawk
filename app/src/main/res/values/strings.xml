@@ -12,6 +12,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_share">分享</string>
     <string name="action_photo">相册</string>
+    <string name="action_setting">设置</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="func_chat">聊天</string>
@@ -27,5 +28,21 @@
     <string name="title_activity_image_chose_grid">ImageChoseGridActivity</string>
     <string name="activity_image_chose">图片</string>
 
+    <!-- 设置界面-->
+    <string name="setting_title">个人设置</string>
+    <string name="system_settings">设置</string>
+    <string name="sudoku_setting">手势密码</string>
+    <string name="update_sudoku_setting">修改手势密码</string>
+    <string name="sudoku_key">sudoku_key</string>
+    <string name="sudoku_switch_summary_on">开启手势密码</string>
+    <string name="sudoku_switch_summary_off">关闭手势密码</string>
+    <string name="sudoku_input">请输入密码</string>
+    <string name="confirm_setting">确认</string>
+    <string name="forget_password">忘记手势密码</string>
+
+    <string-array name="chatPicChoose">
+        <item>相册</item>
+        <item>拍照</item>
+    </string-array>
 
 </resources>
