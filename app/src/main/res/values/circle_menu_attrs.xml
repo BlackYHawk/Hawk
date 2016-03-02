@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleMenuLayout">
+        <attr name="center_ratio" format="float" />
+        <attr name="child_ratio" format="float" />
+        <attr name="circle_center" format="reference" />
+    </declare-styleable>
+    <item name="circle_center" type="id" />
+
+</resources>

@@ -386,6 +386,5 @@ public class ImageChoseGridActivity extends AppCompatActivity implements View.On
         wholeItems = null;
         items.clear();
         items = null;
-
     }
 }
