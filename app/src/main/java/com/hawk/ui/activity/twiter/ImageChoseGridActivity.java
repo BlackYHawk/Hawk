@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.twiter.view.AlbumPopupWindow;
-import com.hawk.adapter.ChoseGridAdapter;
+import com.hawk.adapter.twiter.ChoseGridAdapter;
 import com.hawk.data.cache.Bimp;
 import com.hawk.data.model.ImageBucket;
 import com.hawk.data.model.ImageItem;

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
+import com.hawk.data.table.ChatMsgTable;
 import com.hawk.data.table.CommentTable;
 import com.hawk.data.table.TwiterTable;
 import com.hawk.data.table.UserTable;
@@ -98,6 +99,9 @@ public class HDBHelper extends BaseDbHelper {
 		if(null != UserTable.getInstance()){
 			arg0.execSQL(sql + UserTable.getInstance().getTableName());
 		}
+		if(null != ChatMsgTable.getInstance()){
+			arg0.execSQL(sql + ChatMsgTable.getInstance().getTableName());
+		}
 
 	}
 
@@ -122,6 +126,9 @@ public class HDBHelper extends BaseDbHelper {
 		}
 		if(null != UserTable.getInstance()){
 			db.execSQL(UserTable.getInstance().getCreateTableSql());
+		}
+		if(null != ChatMsgTable.getInstance()){
+			db.execSQL(ChatMsgTable.getInstance().getCreateTableSql());
 		}
 	}
 }

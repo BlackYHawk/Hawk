@@ -1,4 +1,4 @@
-package com.hawk.adapter;
+package com.hawk.adapter.twiter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -53,6 +53,7 @@
             android:name=".twiter.ImageChoseGridActivity"
             android:label="@string/title_activity_image_chose_grid" >
         </activity>
+        <activity android:name=".robot.RobotActivity" />
     </application>
 
 </manifest>

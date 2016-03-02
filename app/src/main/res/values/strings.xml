@@ -10,14 +10,19 @@
     <string name="menu_delete">删除</string>
 
     <string name="action_settings">Settings</string>
-    <string name="action_share">分享</string>
+    <string name="action_weibo">微博</string>
     <string name="action_photo">相册</string>
+    <string name="action_robot">聊天机器人</string>
     <string name="action_setting">设置</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="func_chat">聊天</string>
     <string name="func_share">分享</string>
     <string name="func_photo">相册</string>
+
+    <string name="login_top_back">返回</string>
+    <string name="chat_top_title">聊天机器人</string>
+    <string name="chat_send">发送</string>
 
     <string name="title_activity_add_twiter">AddTwiterActivity</string>
     <string name="activity_twiter_add">发布动态</string>

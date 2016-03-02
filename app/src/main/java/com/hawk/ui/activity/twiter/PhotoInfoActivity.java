@@ -40,7 +40,6 @@ public class PhotoInfoActivity extends Activity {
 		setContentView(R.layout.activity_ui_photo);
 
 		photo_relativeLayout = (RelativeLayout) findViewById(R.id.photo_relativeLayout);
-		photo_relativeLayout.setBackgroundColor(0x70000000);
 
         current = (TextView) findViewById(R.id.photo_tv_current);
         total = (TextView) findViewById(R.id.photo_tv_total);

@@ -22,9 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.hawk.adapter.TwiterAdapter;
+import com.hawk.adapter.twiter.TwiterAdapter;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
+import com.hawk.ui.activity.robot.RobotActivity;
 import com.hawk.ui.activity.twiter.TwiterAddActivity;
 import com.hawk.ui.fragment.DrawerMenu;
 
@@ -163,7 +164,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void navigate(final int itemId) {
         // perform the actual navigation logic, updating the main content fragment etc
+        switch (itemId) {
+            case R.id.nav_menu_weibo :
 
+                break;
+            case R.id.nav_menu_photo :
+
+                break;
+            case R.id.nav_menu_robot :
+                startActivity(new Intent(this, RobotActivity.class));
+                break;
+            case R.id.nav_menu_setting :
+
+                break;
+        }
     }
 
     @Override
