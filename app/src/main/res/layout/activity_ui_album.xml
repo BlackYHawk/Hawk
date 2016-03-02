@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:fitsSystemWindows="?attr/fits_windows"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:transitionName="actionBar"/>
+
+    <com.hawk.ui.widget.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/swipe_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        swipe:min_adapter_stack="4"
+        swipe:max_visible="4"
+        swipe:y_offset_step="28dp"/>
+
+</LinearLayout>

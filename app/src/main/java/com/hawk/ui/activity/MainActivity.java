@@ -25,7 +25,9 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hawk.adapter.TwiterAdapter;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
+import com.hawk.ui.activity.album.AlbumActivity;
 import com.hawk.ui.activity.twiter.TwiterAddActivity;
+import com.hawk.ui.activity.widget.WidgetActivity;
 import com.hawk.ui.fragment.DrawerMenu;
 
 import java.util.ArrayList;
@@ -35,7 +37,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
-
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private final Handler mDrawerActionHandler = new Handler();
@@ -132,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
@@ -163,7 +163,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void navigate(final int itemId) {
         // perform the actual navigation logic, updating the main content fragment etc
-
+        switch (itemId) {
+            case R.id.nav_photo :
+                startActivity(new Intent(this, AlbumActivity.class));
+                break;
+            case R.id.nav_widget :
+                startActivity(new Intent(this, WidgetActivity.class));
+                break;
+        }
     }
 
     @Override

@@ -11,6 +11,10 @@
             android:id="@+id/nav_photo"
             android:title="@string/action_photo"
             android:icon="@drawable/func_photo"/>
+        <item
+            android:id="@+id/nav_widget"
+            android:title="@string/action_widget"
+            android:icon="@drawable/func_photo"/>
     </group>
 
     <item android:id="@+id/selection"
