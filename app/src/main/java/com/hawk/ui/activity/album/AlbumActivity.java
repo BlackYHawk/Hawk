@@ -66,6 +66,13 @@ public class AlbumActivity extends AppCompatActivity implements SwipeFlingAdapte
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.activity_album);
         this.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density;

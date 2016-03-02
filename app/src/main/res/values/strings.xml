@@ -4,7 +4,6 @@
     <string name="app_name">Hawk</string>
     <string name="hello_world">Hello world!</string>
 
-    <string name="ui_clearwords">清除文字吗？</string>
     <string name="sure">确定</string>
     <string name="cancle">取消</string>
     <string name="menu_delete">删除</string>
@@ -24,10 +23,13 @@
     <string name="chat_top_title">聊天机器人</string>
     <string name="chat_send">发送</string>
 
+    <string name="activity_album">相册</string>
+
     <string name="title_activity_add_twiter">AddTwiterActivity</string>
     <string name="activity_twiter_add">发布动态</string>
     <string name="activity_twiter_hint">这一刻的想法</string>
     <string name="action_finish">发送</string>
+    <string name="ui_clearwords">清除文字吗？</string>
     <string name="activity_twiter_len_limit">160</string>
 
     <string name="title_activity_image_chose_grid">ImageChoseGridActivity</string>

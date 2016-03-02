@@ -12,5 +12,7 @@ public class ImageItem implements Serializable {
 	public String imageId;
 	public String thumbnailPath;
 	public String imagePath;
+	public String imageName;
+	public String imageTitle;
 	public boolean isSelected = false;
 }

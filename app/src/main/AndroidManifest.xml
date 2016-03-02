@@ -54,6 +54,7 @@
             android:label="@string/title_activity_image_chose_grid" >
         </activity>
         <activity android:name=".robot.RobotActivity" />
+        <activity android:name=".album.AlbumActivity" />
     </application>
 
 </manifest>
