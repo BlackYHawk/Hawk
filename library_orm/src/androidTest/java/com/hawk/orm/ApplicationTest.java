@@ -1,4 +1,4 @@
-package com.hawk.library;
+package com.hawk.orm;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

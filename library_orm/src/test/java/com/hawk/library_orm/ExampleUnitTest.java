@@ -1,4 +1,4 @@
-package com.hawk.library;
+package com.hawk.orm;
 
 import org.junit.Test;
 

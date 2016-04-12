@@ -36,6 +36,9 @@
     <string name="activity_image_chose">图片</string>
 
     <!-- 设置界面-->
+    <string name="activity_map">地图</string>
+
+    <!-- 设置界面-->
     <string name="setting_title">个人设置</string>
     <string name="system_settings">设置</string>
     <string name="sudoku_setting">手势密码</string>

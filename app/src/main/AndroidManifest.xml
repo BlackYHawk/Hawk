@@ -27,7 +27,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 开机自启动 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
@@ -37,6 +39,14 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="TuXd2qgXtnOi66vWsz07NflH4rteNSAQ" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
+
         <activity
             android:name=".basic.SplashActivity"
             android:label="@string/app_name" >
@@ -55,6 +65,8 @@
         </activity>
         <activity android:name=".robot.RobotActivity" />
         <activity android:name=".album.AlbumActivity" />
+        <activity android:name=".map.BaiduMapActivity" />
+
     </application>
 
 </manifest>

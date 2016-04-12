@@ -1,4 +1,4 @@
-package com.hawk.activity;
+package com.hawk.ui.activity;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

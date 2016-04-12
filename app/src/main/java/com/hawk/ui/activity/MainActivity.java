@@ -26,6 +26,7 @@ import com.hawk.adapter.twiter.TwiterAdapter;
 import com.hawk.data.manager.TwiterDBManager;
 import com.hawk.data.model.Twiter;
 import com.hawk.ui.activity.album.AlbumActivity;
+import com.hawk.ui.activity.map.BaiduMapActivity;
 import com.hawk.ui.activity.robot.RobotActivity;
 import com.hawk.ui.activity.twiter.TwiterAddActivity;
 import com.hawk.ui.fragment.DrawerMenu;
@@ -174,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_menu_robot :
                 startActivity(new Intent(this, RobotActivity.class));
+                break;
+            case R.id.nav_menu_map :
+                startActivity(new Intent(this, BaiduMapActivity.class));
                 break;
             case R.id.nav_menu_setting :
 

@@ -16,6 +16,10 @@
             android:title="@string/action_robot"
             android:icon="@drawable/icon_robot"/>
         <item
+            android:id="@+id/nav_menu_map"
+            android:title="@string/activity_map"
+            android:icon="@drawable/icon_map"/>
+        <item
             android:id="@+id/nav_menu_setting"
             android:title="@string/action_setting"
             android:icon="@drawable/icon_setting"/>

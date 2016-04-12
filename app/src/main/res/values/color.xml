@@ -10,6 +10,7 @@
     <color name="theme_accent">@color/accent_color</color>
     <color name="theme_background">#dcdee3</color>
 
+    <color name="white_bg">#f0f3f8</color>
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>
     <color name="white_pressed">#f1f1f1</color>
