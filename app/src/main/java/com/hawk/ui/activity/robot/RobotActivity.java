@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.hawk.adapter.robot.ChatMsgViewAdapter;
-import com.hawk.data.manager.ChatMsgDBManager;
-import com.hawk.data.model.ChatMsg;
-import com.hawk.http.AIHttp;
+import com.hawk.life.support.bean.AIChatBean;
 import com.hawk.ui.activity.R;
 import com.hawk.util.UIHelper;
 
@@ -33,7 +31,7 @@ public class RobotActivity extends FragmentActivity implements OnClickListener {
 	
 	private AIHttp aiHttp;
 	private ChatMsgViewAdapter mAdapter;
-	private List<ChatMsg> mDataArrays;
+	private List<AIChatBean> mDataArrays;
 
 	private ChatMsgDBManager chatMsgDBManager;
 	
@@ -69,7 +67,7 @@ public class RobotActivity extends FragmentActivity implements OnClickListener {
     	
     	if(mDataArrays == null)
     	{
-    		mDataArrays = new ArrayList<ChatMsg>();
+    		mDataArrays = new ArrayList<AIChatBean>();
     	}
     	
     	mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
@@ -77,7 +75,7 @@ public class RobotActivity extends FragmentActivity implements OnClickListener {
     }
     
     //保存记录
-    private void saveData(ChatMsg chatMsg)
+    private void saveData(AIChatBean chatMsg)
     {
 		chatMsgDBManager.addChatMsg(chatMsg);
     }
@@ -102,7 +100,7 @@ public class RobotActivity extends FragmentActivity implements OnClickListener {
 		{
 			if(msg.what == 1)
 			{
-				ChatMsg entity = new ChatMsg();
+				AIChatBean entity = new AIChatBean();
 				entity.date = getTime();
 				entity.isComMsg = true;
 				entity.text = (String)msg.obj;
@@ -163,7 +161,7 @@ public class RobotActivity extends FragmentActivity implements OnClickListener {
 				}
 			}.start();
 			
-			ChatMsg entity = new ChatMsg();
+			AIChatBean entity = new AIChatBean();
 			entity.date = getTime();
 			entity.isComMsg = false;
 			entity.text = contString;

@@ -5,11 +5,20 @@
     <dimen name="activity_half_margin">8dp</dimen>
     <dimen name="navigation_drawer_width">240dp</dimen>
 
+    <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
+    <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
     <dimen name="activity_add_form">120dp</dimen>
     <dimen name="activity_add_photo">240dp</dimen>
 
     <dimen name="divider_space">5dp</dimen>
+    <!--标签的大小-->
+    <dimen name="emotion_size">18dip</dimen>
+    <dimen name="publish_emotion_size">22dip</dimen>
+    <!-- timeline padding -->
+    <dimen name="item_padding">10dip</dimen>
+    <dimen name="item_margin">5dip</dimen>
+
     <!-- TimelinePicsGap -->
     <dimen name="gap_pics">4dp</dimen>
     <dimen name="comm_h_gap">10dip</dimen>

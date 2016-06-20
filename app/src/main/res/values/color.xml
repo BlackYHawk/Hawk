@@ -10,6 +10,7 @@
     <color name="theme_accent">@color/accent_color</color>
     <color name="theme_background">#dcdee3</color>
 
+    <color name="followers_counter">#ff5656</color>
     <color name="white_bg">#f0f3f8</color>
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>
@@ -29,13 +30,6 @@
     <color name="text_87">#dd000000</color>
     <color name="text_80">#cc000000</color>
     <color name="text_54">#69000000</color>
-
-    <color name="comm_white">#FFffffff</color>
-    <color name="comm_black">#FF000000</color>
-    <color name="comm_gray">#FF888888</color>
-    <color name="comm_blue">#FF52A0DB</color>
-    <color name="comm_red">#FFFF0000</color>
-    <color name="comm_transparent">#00000000</color>
 
     <color name="link">#999966</color>
     <color name="tips">#cfcfcf</color>

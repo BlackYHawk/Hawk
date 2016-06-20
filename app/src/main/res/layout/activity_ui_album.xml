@@ -13,7 +13,7 @@
         android:elevation="4dp"
         android:transitionName="actionBar"/>
 
-    <com.hawk.ui.widget.flingswipe.SwipeFlingAdapterView
+    <com.hawk.life.ui.widget.flingswipe.SwipeFlingAdapterView
         android:id="@+id/swipe_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

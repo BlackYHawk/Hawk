@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.twiter.view.AlbumPopupWindow;
 import com.hawk.data.cache.BitmapCache;
-import com.hawk.data.model.ImageBucket;
-import com.hawk.data.model.ImageItem;
+import com.hawk.life.support.bean.ImageBucket;
+import com.hawk.life.support.bean.ImageItem;
 
 import java.util.HashMap;
 import java.util.Iterator;

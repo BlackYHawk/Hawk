@@ -14,7 +14,8 @@
         android:textAlignment="center"
         android:textSize="30sp" />
     
-    <com.hawk.ui.widget.SudokuView android:id="@+id/sudoku"
+    <com.hawk.life.ui.widget.SudokuView
+        android:id="@+id/sudoku"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

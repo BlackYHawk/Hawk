@@ -22,7 +22,8 @@
 	
 	</RelativeLayout>
 	
-    <com.hawk.ui.widget.SudokuView android:id="@+id/setting_sudoku"
+    <com.hawk.life.ui.widget.SudokuView
+        android:id="@+id/setting_sudoku"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

@@ -9,7 +9,7 @@
     android:padding="8dp"
     android:clickable="true" >
 
-    <com.hawk.ui.widget.CircleImageView
+    <com.hawk.library.ui.widget.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"

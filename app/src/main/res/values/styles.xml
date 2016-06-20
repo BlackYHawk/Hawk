@@ -42,4 +42,19 @@
         <item name="android:background">#bfbfbf</item>
     </style>
 
+    <style name="TextTitle">
+        <item name="android:textColor">?attr/text_title</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextSubhead">
+        <item name="android:textColor">?attr/text_subhead</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextBody">
+        <item name="android:textColor">?attr/text_body</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

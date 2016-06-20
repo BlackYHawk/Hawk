@@ -20,6 +20,14 @@
             android:title="@string/activity_map"
             android:icon="@drawable/icon_map"/>
         <item
+            android:id="@+id/nav_menu_contact"
+            android:title="@string/activity_contact"
+            android:icon="@drawable/icon_map"/>
+        <item
+            android:id="@+id/nav_menu_socket"
+            android:title="@string/activity_socket"
+            android:icon="@drawable/icon_map"/>
+        <item
             android:id="@+id/nav_menu_setting"
             android:title="@string/action_setting"
             android:icon="@drawable/icon_setting"/>

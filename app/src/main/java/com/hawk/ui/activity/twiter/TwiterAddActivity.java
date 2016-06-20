@@ -17,12 +17,9 @@ import android.widget.TextView;
 
 import com.hawk.adapter.itemanimator.CustomItemAnimator;
 import com.hawk.data.cache.Bimp;
-import com.hawk.data.manager.TwiterDBManager;
-import com.hawk.data.model.Twiter;
 import com.hawk.middleware.util.StringUtil;
 import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.twiter.adapter.ImageAdapter;
-import com.hawk.util.LOG;
 import com.hawk.util.UIHelper;
 
 import java.io.IOException;
@@ -142,7 +139,7 @@ public class TwiterAddActivity extends AppCompatActivity {
                 try {
                     do {
                         String path = Bimp.drr.get(Bimp.max);
-                        LOG.Error(TAG, path);
+                        LOG.E(TAG, path);
                         Bitmap bm = Bimp.revitionImageSize(path);
                         Bimp.bmp.add(bm);
                         Bimp.max += 1;
@@ -199,7 +196,7 @@ public class TwiterAddActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LOG.Error(TAG, "onResume");
+        LOG.E(TAG, "onResume");
         new LoadTask().execute();
     }
 
@@ -207,7 +204,7 @@ public class TwiterAddActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-        LOG.Error(TAG, "onDestroy");
+        LOG.E(TAG, "onDestroy");
 
         Bimp.clear();
 	}

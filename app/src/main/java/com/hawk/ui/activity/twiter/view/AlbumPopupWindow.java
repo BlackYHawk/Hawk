@@ -11,7 +11,7 @@ import android.widget.PopupWindow;
 
 import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.twiter.adapter.AlbumAdapter;
-import com.hawk.data.model.ImageBucket;
+import com.hawk.life.support.bean.ImageBucket;
 import com.hawk.adapter.itemanimator.CustomItemAnimator;
 
 import java.util.HashMap;

@@ -20,7 +20,7 @@
         android:scaleType="centerCrop"
         android:visibility="gone"/>
 
-    <com.hawk.ui.widget.CheckBox
+    <com.hawk.life.ui.widget.CheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

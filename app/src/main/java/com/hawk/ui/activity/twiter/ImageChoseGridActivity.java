@@ -22,10 +22,10 @@ import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.twiter.view.AlbumPopupWindow;
 import com.hawk.adapter.twiter.ChoseGridAdapter;
 import com.hawk.data.cache.Bimp;
-import com.hawk.data.model.ImageBucket;
-import com.hawk.data.model.ImageItem;
+import com.hawk.life.support.bean.ImageBucket;
+import com.hawk.life.support.bean.ImageItem;
 import com.hawk.middleware.util.FileUtil;
-import com.hawk.util.Constants;
+import com.hawk.life.support.utils.Constants;
 import com.hawk.util.UIHelper;
 
 import java.io.File;

@@ -22,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hawk.data.cache.BitmapCache;
-import com.hawk.data.model.ImageItem;
+import com.hawk.life.support.bean.ImageItem;
 import com.hawk.ui.activity.R;
-import com.hawk.ui.widget.flingswipe.SwipeFlingAdapterView;
+import com.hawk.life.ui.widget.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 import java.util.Collection;

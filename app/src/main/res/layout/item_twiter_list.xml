@@ -17,7 +17,7 @@
         />
 
     <!--org.aisen.weibo.sina.ui.widget.TimelinePicsView-->
-    <com.hawk.ui.widget.TimelinePicsView
+    <com.hawk.life.ui.widget.TimelinePicsView
         android:id="@+id/layPicturs" android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -57,6 +57,6 @@
         <ImageView
             android:id="@+id/img09" style="@style/timelinePicture"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </com.hawk.ui.widget.TimelinePicsView>
+    </com.hawk.life.ui.widget.TimelinePicsView>
 
 </LinearLayout>

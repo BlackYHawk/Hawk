@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.hawk.data.model.ChatMsg;
+import com.hawk.life.support.bean.AIChatBean;
 import com.hawk.ui.activity.R;
 
 import java.util.List;
@@ -22,13 +22,13 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		int IMVT_TO_MSG = 1;
 	}
 
-	private List<ChatMsg> coll;
+	private List<AIChatBean> coll;
 
 	private Context ctx;
 
 	private LayoutInflater mInflater;
 
-	public ChatMsgViewAdapter(Context context, List<ChatMsg> coll) {
+	public ChatMsgViewAdapter(Context context, List<AIChatBean> coll) {
 		ctx = context;
 		this.coll = coll;
 		mInflater = LayoutInflater.from(ctx);
@@ -48,7 +48,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 
 	public int getItemViewType(int position) {
 		// TODO Auto-generated method stub
-		ChatMsg entity = coll.get(position);
+		AIChatBean entity = coll.get(position);
 
 		if (entity.isComMsg)
 		{
@@ -66,7 +66,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		ChatMsg entity = coll.get(position);
+		AIChatBean entity = coll.get(position);
 		boolean isComMsg = entity.isComMsg;
 
 		ViewHolder viewHolder = null;	

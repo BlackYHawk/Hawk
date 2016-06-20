@@ -23,13 +23,11 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hawk.adapter.twiter.TwiterAdapter;
-import com.hawk.data.manager.TwiterDBManager;
-import com.hawk.data.model.Twiter;
 import com.hawk.ui.activity.album.AlbumActivity;
 import com.hawk.ui.activity.map.BaiduMapActivity;
 import com.hawk.ui.activity.robot.RobotActivity;
 import com.hawk.ui.activity.twiter.TwiterAddActivity;
-import com.hawk.ui.fragment.DrawerMenu;
+import com.hawk.util.IntentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,6 +176,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_menu_map :
                 startActivity(new Intent(this, BaiduMapActivity.class));
+                break;
+            case R.id.nav_menu_contact :
+                IntentUtil.doStartApplicationWithPackageName(this, "com.hawk.contact");
+                break;
+            case R.id.nav_menu_socket :
+
                 break;
             case R.id.nav_menu_setting :
 

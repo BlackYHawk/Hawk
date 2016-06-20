@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app-settings>
+
+	<setting type="base_url">
+		<des>新浪微博服务地址</des>
+		<value>https://api.weibo.com/2/</value>
+	</setting>
+
+
+	<setting type="tuling_key">
+		<des>图灵智能机器人服务KEY</des>
+		<value>bea5018c82cf65ddb3bd01c0b4783d96</value>
+	</setting>
+
+	<setting type="tuling_url">
+		<des>图灵智能机器人服务地址</des>
+		<value>http://www.tuling123.com/openapi/api</value>
+	</setting>
+
+	<setting type="tuling_text">
+		<des>根据输入的消息返回回复</des>
+		<value> </value>
+	</setting>
+
+</app-settings>

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hawk.ui.activity.R;
-import com.hawk.ui.widget.SudokuView;
+import com.hawk.life.ui.widget.SudokuView;
 import com.hawk.util.PreferenceUtil;
 
 //手势密码修改界面

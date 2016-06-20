@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import com.hawk.ui.activity.R;
 import com.hawk.data.cache.BitmapCache;
-import com.hawk.data.model.ImageItem;
-import com.hawk.ui.widget.CheckBox;
+import com.hawk.life.support.bean.ImageItem;
+import com.hawk.life.ui.widget.CheckBox;
 
 import java.util.List;
 

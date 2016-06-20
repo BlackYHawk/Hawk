@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.hawk.ui.activity.MainActivity;
 import com.hawk.ui.activity.R;
 import com.hawk.ui.activity.basic.SplashActivity;
-import com.hawk.ui.widget.SudokuView;
+import com.hawk.life.ui.widget.SudokuView;
 import com.hawk.util.PreferenceUtil;
 import com.hawk.util.UIHelper;
 
